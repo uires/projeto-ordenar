@@ -12,6 +12,28 @@
 			echo "error pdo ->" . $e->getMessage();
 			exit;
 		}?>
+		<form >
+			<select name="ordenar"method="GET" onchange="this.form.submit()" >
+				<option></option>
+				<option value="orderByNome">order by nome</option>
+				<option value="orderByIdade">order by idade</option>
+			</select>
+		</form>
+		<?php
+		if(isset($_GET['ordenar']) AND !empty($_GET['ordenar']) == false){
+			$ordem = addslashes($_GET['ordenar']);
+			if($ordem == "orderByNome") {
+				$sql = "SELECT * FROM usuarios ORDER BY nome ASC";
+			}
+			if($ordem == "orderByIdade"){
+				$sql = "SELECT * FROM usuarios ORDER BY idade ASC";
+			}else{
+
+			}
+		}else{
+			$sql = "SELECT * FROM usuarios";
+		}
+		?>
 		<table border="0" width="400" style="margin: auto;">
 			
 			<tr>
@@ -20,7 +42,7 @@
 			</tr>
 
 			<?php
-			$sql = "SELECT * FROM usuarios";
+			
 			$sql=$pdo->query($sql);
 
 			if($sql->rowCount() > 0){
